@@ -5,6 +5,7 @@ Extracting relevant information from resume using Deep Learning.
 ### Requirements
 Code successfully runs with:
 ```
+OS- Ubuntu 18.04
 python 3.6.5
 numpy 1.13.3
 pandas 0.23.0
