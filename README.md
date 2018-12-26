@@ -14,8 +14,10 @@ pdfminer
 ```
 ## Usage
 ### Data Preparation
+
 Getting training data is most challenging part due to lack of publicaly available dataset of resume. Currently, to create 
 training data you will have to manually label the lines of resume.
+
 1.Put the resume in ``` data/training_data``` folder. Currently only ```.pdf``` and ```.docx``` format supported.
 
 2. Run ```utils/create_training_data.py```. A popup will be created. Annote the lines of resume in the same.
