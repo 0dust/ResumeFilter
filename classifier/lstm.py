@@ -55,7 +55,6 @@ class BidirectionalLstm():
         
     
     def create_model(self,use_pretrained_embedd,embedding_size):
-#        embedding_size = 300
         dropout_rate = 0.2
         print(embedding_size,self.max_len,self.vocab_size)
         self.model = Sequential()
@@ -85,11 +84,8 @@ class BidirectionalLstm():
             x.append(word_idx_list)
 #            y.append(self.labels[label])
             y.append(label)
-#        print(x)
-#        print(y)
         X = pad_sequences(x, maxlen = self.max_len)
         Y  = np_utils.to_categorical(y,len(self.labels))
-#        print(Y)
         return X,Y
     
             
