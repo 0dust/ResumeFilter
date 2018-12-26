@@ -53,7 +53,6 @@ class ResumeParser():
         
         model_essentials_dict = essentials(training_data_dir_path,label_column_name = 'label')
         final_training_data = load_final_data(training_data_dir_path, label_column_name = 'label')
-#        print('r90we8rw0000000089089999999999999999999999',final_training_data)
         print('###################### Training for line label ###########################')
         fitted_model = self.line_label_classifier.fit(model_dir_path+'/label', model_essentials_dict,
                                                       final_training_data,batch_size,epochs,
@@ -135,26 +134,18 @@ class ResumeParser():
         result = dict()
         if self.email:
             result['email'] = self.name
-#            result += 'email: {}\n'.format(self.name)
         if self.gender:
             result['gender'] = self.gender
-#            result += 'gender: {}\n'.format(self.gender)
         if self.education:
             result['education'] = self.education
-#            result += 'education: {}\n'.format(self.education)
         if self.experience:
             result['experience'] = self.experience
-#            result += 'experience: {}\n'.format(self.experience)
         if self.project:
             result['project'] = self.project
-#            result += 'project: {}\n'.format(self.project)
         if self.skills:
             result['skills'] = self.skills
-#            result += 'skills: {}\n'.format(self.skills)
         if self.meta:
             result['meta'] = self.meta
-#            result += 'meta:{}\n'.format(self.meta)
         if self.header:
             result['header'] = self.header
-#            result += 'header:{}\n'.format(self.header)
         return result
