@@ -2,16 +2,18 @@
 Extracting relevant information from resume using Deep Learning.
 
 ## Getting Started
-### Requirements
-Code successfully runs with:
-```
-OS- Ubuntu 18.04
-python 3.6.5
-numpy 1.13.3
-pandas 0.23.0
-keras 2.1.5
-pdfminer
-```
+### Installation
+
+Steps:
+It is recommended to do the installation in anaconda virtual environment to avoid issues with dependencies.
+You can skip creating conda virtual environment(at your own risk!)
+1. Run ``` conda create --name resumefilter python=3.7.6 ```
+2. ``` conda activate resumefilter ```
+3. ``` git clone https://github.com/0dust/ResumeFilter.git ```
+4. ``` cd ResumeFilter ```
+5. ``` pip install -U setuptools ```
+6. ``` pip install -e . ```
+
 ## Usage
 ### Data Preparation
 
