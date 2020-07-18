@@ -6,13 +6,8 @@ Created on Sun Aug 26 16:07:22 2018
 @author: himanshu
 """
 import numpy as np
+import tensorflow as tf
 from nltk import word_tokenize
-from keras.layers import Embedding, Dropout, LSTM,Dense, Bidirectional
-from keras.models import model_from_json, Sequential
-from keras.preprocessing.sequence import pad_sequences
-from keras.preprocessing.text import text_to_word_sequence
-from keras.utils import np_utils
-from keras.callbacks import ModelCheckpoint
 from sklearn.model_selection import train_test_split
 from utils.glovemodel import GloveVector
 
@@ -40,13 +35,13 @@ class BidirectionalLstm():
 
     def load_model(self,model_dir_path):
         json = open(self.get_architect_file_path(model_dir_path), 'r').read()
-        self.model = model_from_json(json)
+        self.model = tf.keras.models.model_from_json(json)
         self.model.load_weights(self.get_weight_file_path(model_dir_path))
         self.model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
         config_file_path = self.get_config_file_path(model_dir_path)
 
-        self.essentials = np.load(config_file_path).item()
+        self.essentials = np.load(config_file_path, allow_pickle = True).item()
         self.idx2word = self.essentials['idx2word']
         self.word2idx = self.essentials['word2idx']
         self.max_len = self.essentials['text_max_len']
@@ -57,14 +52,14 @@ class BidirectionalLstm():
     def create_model(self,use_pretrained_embedd,embedding_size):
         dropout_rate = 0.2
         print(embedding_size,self.max_len,self.vocab_size)
-        self.model = Sequential()
+        self.model = tf.keras.models.Sequential()
         if use_pretrained_embedd:
-            self.model.add(Embedding(input_dim = self.vocab_size,output_dim = embedding_size,input_length = self.max_len,weights = [self.embedding_matrix],trainable = False))
+            self.model.add(tf.keras.layers.Embedding(input_dim = self.vocab_size,output_dim = embedding_size,input_length = self.max_len,weights = [self.embedding_matrix],trainable = False))
         else:
-            self.model.add(Embedding(input_dim = self.vocab_size,output_dim = embedding_size,input_length = self.max_len))
-        self.model.add(Dropout(dropout_rate))
-        self.model.add(Bidirectional(LSTM(units = 64, dropout = 0.2, recurrent_dropout = 0.2, input_shape = (self.max_len,embedding_size))))
-        self.model.add(Dense(len(self.labels),activation = 'softmax'))
+            self.model.add(tf.keras.layers.Embedding(input_dim = self.vocab_size,output_dim = embedding_size,input_length = self.max_len))
+        self.model.add(tf.keras.layers.Dropout(dropout_rate))
+        self.model.add(tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(units = 64, dropout = 0.2, recurrent_dropout = 0.2, input_shape = (self.max_len,embedding_size))))
+        self.model.add(tf.keras.layers.Dense(len(self.labels),activation = 'softmax'))
         
         self.model.compile(optimizer = 'rmsprop',loss = 'categorical_crossentropy',metrics = ['accuracy'])
   
@@ -72,7 +67,7 @@ class BidirectionalLstm():
         x = []
         y = []
         for text, label in training_data:
-            tokens = text_to_word_sequence(text)
+            tokens = tf.keras.preprocessing.text.text_to_word_sequence(text)
             
             word_idx_list = []
            
@@ -84,8 +79,8 @@ class BidirectionalLstm():
             x.append(word_idx_list)
 #            y.append(self.labels[label])
             y.append(label)
-        X = pad_sequences(x, maxlen = self.max_len)
-        Y  = np_utils.to_categorical(y,len(self.labels))
+        X = tf.keras.preprocessing.sequence.pad_sequences(x, maxlen = self.max_len)
+        Y  = tf.keras.utils.to_categorical(y,len(self.labels))
         return X,Y
     
             
@@ -119,7 +114,7 @@ class BidirectionalLstm():
             file.write(json_model)
         
         model_weight_file = self.get_weight_file_path(model_dir_path)
-        checkpoint = ModelCheckpoint(model_weight_file)
+        checkpoint = tf.keras.callbacks.ModelCheckpoint(model_weight_file)
         
         fitted_model = self.model.fit(x = x_train, y = y_train, batch_size = batch_size, epochs = epochs,
                                       validation_data = [x_test,y_test], callbacks = [checkpoint],verbose = 1)
@@ -139,7 +134,7 @@ class BidirectionalLstm():
         tokens = [w.lower() for w in word_tokenize(sentence)]
         word_idx = [self.word2idx[token] if token in self.word2idx else 0 for token in tokens]
         x.append(word_idx)
-        X = pad_sequences(x, self.max_len)
+        X = tf.keras.preprocessing.sequence.pad_sequences(x, self.max_len)
         output = self.model.predict(X)
         return output[0]
 
