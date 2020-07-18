@@ -10,8 +10,7 @@ import os
 import pandas as pd
 import nltk
 import collections
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.text import text_to_word_sequence
+import tensorflow as tf
 
 line_labels = {0: 'experience', 1: 'knowledge', 2: 'education', 3: 'project', 4: 'others'}
 line_labels_rev = {v:k for k,v in line_labels.items()}
@@ -38,7 +37,7 @@ def essentials(data_dir_path, max_vocab_size = None, label_column_name = None):
                 text = line['text']
                 line_type = line['type']
                 line_label = line['label']                
-                tokens = text_to_word_sequence(text,lower = True)
+                tokens = tf.keras.preprocessing.text.text_to_word_sequence(text,lower = True)
                 text_max_len = max(text_max_len,len(tokens))
                 vocab.extend(tokens)
     tokens_wth_freq = collections.Counter(vocab)

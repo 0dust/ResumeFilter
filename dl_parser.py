@@ -8,11 +8,11 @@ Created on Sun Aug 26 16:04:23 2018
 import os
 import sys
 import pandas as pd
+import tensorflow as tf
 from classifier.lstm import BidirectionalLstm
 from utils.model_essentials import essentials
 from utils.load_training_data import load_final_data
 from utils.parsing_rules import *
-from keras.preprocessing.text import text_to_word_sequence
 line_labels = {0: 'experience', 1: 'knowledge', 2: 'education', 3: 'project', 4: 'others'}
 line_types = {0: 'header', 1: 'meta', 2: 'content'}
 
@@ -99,7 +99,7 @@ class ResumeParser():
     def parse(self,text):
         self.raw_text = text
         for line in text:
-            tokens = text_to_word_sequence(line)
+            tokens = tf.keras.preprocessing.text.text_to_word_sequence(line)
             line_label = self.line_label_classifier.predict_class(line)
             line_type =  self.line_type_classifier.predict_class(line)
 #            print(line_label)

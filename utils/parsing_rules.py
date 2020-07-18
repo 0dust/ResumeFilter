@@ -7,7 +7,7 @@ Created on Tue Aug 28 18:50:04 2018
 """
 
 import re
-from keras.preprocessing.text import text_to_word_sequence
+import tensorflow as tf
 
 def get_email(line):
     email = None
@@ -17,7 +17,7 @@ def get_email(line):
     return email
 
 def get_gender(line):
-    parts = text_to_word_sequence(line)
+    parts = tf.keras.preprocessing.text.text_to_word_sequence(line)
     gender = None
     if 'male' in parts:
         gender = 'male'

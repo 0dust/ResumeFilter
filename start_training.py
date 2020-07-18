@@ -26,7 +26,7 @@ def main():
 
     classifier = ResumeParser()
     batch_size = 64
-    epochs = 50
+    epochs = 100
     history = classifier.fit(training_data_dir_path=training_data_dir_path,
                              model_dir_path=output_dir_path,
                              batch_size=batch_size,
@@ -35,7 +35,7 @@ def main():
                              random_state=random_state,
                              dropout_rate = None,
                              use_pretrained_embedd = True,
-                             embedding_size = 300)
+                             embedding_size = 50)
 
 
 if __name__ == '__main__':

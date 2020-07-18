@@ -1,0 +1,7 @@
+*.log
+*.pyc
+*.npy
+*.h5
+*.json
+.vscode/
+*.egg-info/
