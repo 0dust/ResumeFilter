@@ -12,9 +12,8 @@ ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
 echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
 echo "conda activate base" >> ~/.bashrc && \
 echo "Set disable_coredump false" >> /etc/sudo.conf && \
-sudo -s source ~/.bashrc && \
-cat ~/.bashrc 
+sudo -s source ~/.bashrc
 
-RUN conda update conda && \
+RUN . /opt/conda/etc/profile.d/conda.sh && \
 conda create --name resumefilter python=3.7.6 && \
 conda activate resumefilter
