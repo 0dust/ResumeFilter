@@ -11,6 +11,7 @@ rm Anaconda3-2020.02-Linux-x86_64.sh && \
 ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
 echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
 echo "conda activate base" >> ~/.bashrc && \
+echo "Set disable_coredump false" >> /etc/sudo.conf && \
 sudo -s source ~/.bashrc && \
 cat ~/.bashrc 
 
