@@ -21,15 +21,6 @@ class GloveVector():
         if embedding_size == None:
             embedding_size = 50
         self.embedding_size = embedding_size
-        # self.embedding_size = 50
-
-        
-        
-#    def embedding_creation(self,data_dir_path,embedding_size):
-#        if embedding_size == None:
-#            embedding_size = 50
-#        embedding_dict = prepare_embedding(embedding_size,download = False)
-#        return embedding_dict
 #   
     @staticmethod
     def prepare_embedding(embedding_size, download ):
@@ -42,7 +33,6 @@ class GloveVector():
             zipped = zipfile.ZipFile(glove_zip,mode = 'r')
             zipped.extractall()
             zipped.close()
-      #  data_dir_path = '/home/himanshu/ResumeFilter/data'   
         data_dir_path = os.path.join(os.getcwd() + '/data')
         glove_file_path =  data_dir_path + '/glove.6B/glove.6B.' + str(embedding_size) + 'd.txt'
         embedding_dict = {}

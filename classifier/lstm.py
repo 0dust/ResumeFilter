@@ -20,7 +20,6 @@ class BidirectionalLstm():
         self.word2idx = None
         self.idx2word = None
         self.embedding_matrix = None
-#        self.lstm_config = {'units':64,'dropout':0.2,'recurrent_dropout':0.2}
     @staticmethod
     def get_architect_file_path(model_dir_path):
         return model_dir_path + '/BidirectionalLstm_architecture.json'
@@ -77,7 +76,6 @@ class BidirectionalLstm():
                     word_idx = self.word2idx[token]
                 word_idx_list.append(word_idx)
             x.append(word_idx_list)
-#            y.append(self.labels[label])
             y.append(label)
         X = tf.keras.preprocessing.sequence.pad_sequences(x, maxlen = self.max_len)
         Y  = tf.keras.utils.to_categorical(y,len(self.labels))

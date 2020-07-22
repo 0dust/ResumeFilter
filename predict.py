@@ -38,8 +38,6 @@ def main():
             else:
                 print('1.',info,'\n')
                 
-            
-
         print('++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 
     collected = read_docx_and_pdf(data_dir_path, verbose =False, callback=lambda index, file_path, file_content: {
